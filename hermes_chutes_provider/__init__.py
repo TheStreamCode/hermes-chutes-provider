@@ -4,7 +4,7 @@ from providers import register_provider
 from providers.base import ProviderProfile
 
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 chutes = ProviderProfile(
     name="chutes",

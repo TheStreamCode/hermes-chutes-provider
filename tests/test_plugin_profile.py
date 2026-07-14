@@ -94,6 +94,8 @@ class ChutesDirectoryPluginTests(unittest.TestCase):
         self.assertIn("default:latency", readme)
         self.assertIn("https://llm.chutes.ai/v1/models", readme)
         self.assertNotIn("deepseek-ai/DeepSeek-V3.2-TEE", readme)
+        self.assertIn("https://github.com/Veightor/chutes-agent-toolkit", readme)
+        self.assertNotIn("https://github.com/chutesai/chutes-agent-toolkit", readme)
 
     def test_ci_runs_the_offline_contract_suite(self) -> None:
         if not CI_WORKFLOW_PATH.is_file():

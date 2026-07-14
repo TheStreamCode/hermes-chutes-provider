@@ -93,7 +93,7 @@ transport and provider-discovery systems. It does not modify Hermes Agent, add
 a custom transport, or include Chutes API keys.
 
 For Chutes skills, setup recipes, model guidance, and platform documentation,
-see [chutesai/chutes-agent-toolkit](https://github.com/chutesai/chutes-agent-toolkit).
+see [Veightor/chutes-agent-toolkit](https://github.com/Veightor/chutes-agent-toolkit).
 
 ## Development
 

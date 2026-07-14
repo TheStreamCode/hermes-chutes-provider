@@ -2,6 +2,17 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.1.2] - 2026-07-14
+
+### Changed
+
+- Filter the live Chutes catalog to models that advertise tool calling.
+- Keep Chutes' `default:latency` and `default:throughput` routing aliases in the
+  Hermes model picker without pinning concrete model IDs.
+- Opt in to authoritative live context metadata on compatible Hermes builds.
+- Test against a pinned Hermes checkout and build the package in CI.
+- Correct provider-alias guidance and support Windows PowerShell 5.1 installs.
+
 ## [0.1.1] - 2026-07-14
 
 ### Changed

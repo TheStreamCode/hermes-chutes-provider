@@ -29,7 +29,8 @@ git clone https://github.com/TheStreamCode/hermes-chutes-provider.git \
 On PowerShell:
 
 ```powershell
-$target = Join-Path ($env:HERMES_HOME ?? "$HOME\.hermes") "plugins\model-providers\chutes"
+$hermesHome = if ($env:HERMES_HOME) { $env:HERMES_HOME } else { Join-Path $HOME ".hermes" }
+$target = Join-Path $hermesHome "plugins\model-providers\chutes"
 New-Item -ItemType Directory -Force (Split-Path -Parent $target)
 git clone https://github.com/TheStreamCode/hermes-chutes-provider.git $target
 ```
@@ -56,8 +57,10 @@ Start a new Hermes process and run:
 hermes doctor
 ```
 
-The Provider Connectivity section should list Chutes. The model picker also
-accepts `chutes-ai` and `chutesai` as aliases.
+The Provider Connectivity section should list Chutes. The provider registry
+resolves `chutes-ai` and `chutesai` as aliases for authentication and runtime
+configuration. Use the canonical `chutes` name in `provider:model` picker input
+and new configuration.
 
 ### Native Git and pip installs
 
@@ -81,10 +84,18 @@ model returned by the live
 [`https://llm.chutes.ai/v1/models`](https://llm.chutes.ai/v1/models) catalog.
 
 The live catalog is the source of truth for availability, capabilities, and
-pricing. This provider intentionally supplies neither static fallback models
-nor an auxiliary model so Hermes does not silently route requests to retired
-model IDs. If the catalog is unavailable, restore network access and retry
-instead of relying on a stale local list.
+pricing. The picker keeps the two routing aliases above and includes only live
+models that advertise tool calling. This provider intentionally supplies no
+static concrete model or auxiliary model, so Hermes does not silently route
+requests to retired model IDs. If the catalog is unavailable, the routing
+aliases remain selectable; restore network access before choosing a concrete
+model instead of relying on a stale local list.
+
+Hermes builds without provider live-metadata support discover model IDs but may
+not import their context limits. When selecting a concrete model, copy its live
+`context_length` value to `model.context_length` in the Hermes configuration.
+Routing aliases do not have one fixed context window because their target can
+change between requests.
 
 ## Scope
 

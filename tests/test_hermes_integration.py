@@ -48,6 +48,8 @@ assert get_provider_profile("chutes-ai") is profile
 assert get_provider_profile("chutesai") is profile
 assert profile.base_url == "https://llm.chutes.ai/v1"
 assert profile.env_vars == ("CHUTES_API_KEY", "CHUTES_BASE_URL")
+assert profile.fallback_models == ()
+assert profile.default_aux_model == ""
 
 from hermes_cli.auth import PROVIDER_REGISTRY, resolve_provider
 assert "chutes" in PROVIDER_REGISTRY

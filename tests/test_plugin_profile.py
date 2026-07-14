@@ -18,6 +18,9 @@ CI_WORKFLOW_PATH = REPOSITORY_ROOT / ".github" / "workflows" / "ci.yml"
 class ProviderProfile:
     """Minimal stand-in for Hermes' ProviderProfile at the import boundary."""
 
+    fallback_models = ()
+    default_aux_model = ""
+
     def __init__(self, **attributes: object) -> None:
         self.__dict__.update(attributes)
 
@@ -73,6 +76,8 @@ class ChutesDirectoryPluginTests(unittest.TestCase):
         self.assertEqual(profile.api_mode, "chat_completions")
         self.assertEqual(profile.auth_type, "api_key")
         self.assertEqual(profile.base_url, "https://llm.chutes.ai/v1")
+        self.assertEqual(profile.fallback_models, ())
+        self.assertEqual(profile.default_aux_model, "")
         self.assertEqual(
             profile.env_vars, ("CHUTES_API_KEY", "CHUTES_BASE_URL")
         )
@@ -86,6 +91,9 @@ class ChutesDirectoryPluginTests(unittest.TestCase):
         self.assertIn("NousResearch/hermes-agent#64277", readme)
         self.assertIn("hermes plugins install", readme)
         self.assertIn("hermes_agent.model_providers", readme)
+        self.assertIn("default:latency", readme)
+        self.assertIn("https://llm.chutes.ai/v1/models", readme)
+        self.assertNotIn("deepseek-ai/DeepSeek-V3.2-TEE", readme)
 
     def test_ci_runs_the_offline_contract_suite(self) -> None:
         if not CI_WORKFLOW_PATH.is_file():

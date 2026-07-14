@@ -47,7 +47,7 @@ Then select the provider in `$HERMES_HOME/config.yaml`:
 ```yaml
 model:
   provider: chutes
-  default: deepseek-ai/DeepSeek-V3.2-TEE
+  default: default:latency
 ```
 
 Start a new Hermes process and run:
@@ -75,10 +75,16 @@ repository, use the manual directory install above.
 
 ## Models
 
-Hermes queries Chutes' live `/v1/models` catalog when available. The fallback
-list in this plugin is for offline discovery only and does not guarantee account
-access. Use the live catalog for current model availability, capabilities, and
-pricing.
+`default:latency` is Chutes' routing alias for interactive use. Use
+`default:throughput` for long-running or background work, or select a concrete
+model returned by the live
+[`https://llm.chutes.ai/v1/models`](https://llm.chutes.ai/v1/models) catalog.
+
+The live catalog is the source of truth for availability, capabilities, and
+pricing. This provider intentionally supplies neither static fallback models
+nor an auxiliary model so Hermes does not silently route requests to retired
+model IDs. If the catalog is unavailable, restore network access and retry
+instead of relying on a stale local list.
 
 ## Scope
 

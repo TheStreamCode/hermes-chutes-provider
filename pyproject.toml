@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hermes-chutes-provider"
+version = "0.1.0"
+description = "Chutes model-provider plugin for Hermes Agent"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+  { name = "TheStreamCode" },
+]
+keywords = ["chutes", "hermes-agent", "llm", "model-provider"]
+dependencies = []
+
+[project.urls]
+Homepage = "https://chutes.ai"
+Repository = "https://github.com/TheStreamCode/hermes-chutes-provider"
+Issues = "https://github.com/TheStreamCode/hermes-chutes-provider/issues"
+
+[project.entry-points."hermes_agent.model_providers"]
+chutes = "hermes_chutes_provider:register"
+
+[tool.setuptools]
+packages = ["hermes_chutes_provider"]

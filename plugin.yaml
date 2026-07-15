@@ -1,8 +1,8 @@
 name: chutes-provider
 kind: model-provider
-version: 0.1.2
+version: 0.1.3
 description: Chutes model provider for Hermes Agent
-author: TheStreamCode
+author: Michael Gasperini (Mikesoft)
 requires_env:
   - name: CHUTES_API_KEY
     description: Chutes API key

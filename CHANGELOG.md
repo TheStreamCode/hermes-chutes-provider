@@ -2,6 +2,15 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.1.3] - 2026-07-15
+
+### Changed
+
+- Align copyright and package author metadata with Michael Gasperini (Mikesoft).
+- Clarify the project's independent, unofficial relationship with Chutes.
+- Include the license and attribution notice in built distributions.
+- Add contribution, security, conduct, and pull-request guidance.
+
 ## [0.1.2] - 2026-07-14
 
 ### Changed

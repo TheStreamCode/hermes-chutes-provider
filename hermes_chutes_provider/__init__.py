@@ -8,7 +8,7 @@ from providers import register_provider
 from providers.base import ProviderProfile
 
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 logger = logging.getLogger(__name__)
 
 

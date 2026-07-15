@@ -17,7 +17,7 @@ PACKAGE_PATH = REPOSITORY_ROOT / "hermes_chutes_provider" / "__init__.py"
 PYPROJECT_PATH = REPOSITORY_ROOT / "pyproject.toml"
 MANIFEST_PATH = REPOSITORY_ROOT / "plugin.yaml"
 CHANGELOG_PATH = REPOSITORY_ROOT / "CHANGELOG.md"
-RELEASE_VERSION = "0.1.2"
+RELEASE_VERSION = "0.1.3"
 
 
 class ProviderProfile:

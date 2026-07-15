@@ -8,6 +8,9 @@ This repository intentionally stays outside the Hermes core tree. It uses
 Hermes' user model-provider discovery path, so Chutes-specific maintenance does
 not need an upstream Hermes source change.
 
+This is an independent, unofficial integration. It is not affiliated with,
+endorsed by, sponsored by, or approved by Chutes Global Corp or Nous Research.
+
 ## Requirements
 
 - A Hermes Agent installation with model-provider plugin discovery.
@@ -116,4 +119,6 @@ python -m unittest discover -s tests -v
 
 ## License
 
-[MIT](LICENSE)
+Project-owned code and documentation are licensed under the [MIT License](LICENSE).
+Third-party names, services, and trademarks remain the property of their respective
+owners; see [NOTICE](NOTICE).

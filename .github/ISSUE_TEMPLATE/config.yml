@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Chutes Documentation
+    url: https://docs.chutes.ai
+    about: Official Chutes platform documentation

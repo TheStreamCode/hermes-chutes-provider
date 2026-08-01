@@ -8,26 +8,33 @@ from providers import register_provider
 from providers.base import ProviderProfile
 
 
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 logger = logging.getLogger(__name__)
 
 
 class ChutesProviderProfile(ProviderProfile):
     """Provider profile backed by Chutes' agent-capable live catalog."""
 
-    # Newer Hermes versions use this opt-in to trust /models context metadata.
-    # Older versions safely ignore unknown class attributes.
+    # Forward-compatible opt-in for a host that trusts provider-supplied
+    # /models context metadata instead of its aggregator catalog. No released
+    # Hermes version reads this flag today, and hosts that do not know it
+    # ignore unknown class attributes, so declaring it is inert until support
+    # lands upstream.
     use_live_model_metadata = True
 
     def fetch_model_metadata(
         self,
-        api_key: str = "",
+        api_key: str | None = None,
         base_url: str | None = None,
         timeout: float = 8.0,
     ) -> list[dict[str, object]] | None:
         try:
             effective_base = base_url or self.base_url
-            url = (self.models_url or "").strip()
+            # models_url and default_headers are optional on ProviderProfile:
+            # read them defensively so older hosts that predate either field
+            # still get a working catalog probe instead of a swallowed
+            # AttributeError.
+            url = (getattr(self, "models_url", "") or "").strip()
             if not url:
                 if not effective_base:
                     return None
@@ -40,7 +47,7 @@ class ChutesProviderProfile(ProviderProfile):
                 request.add_header("Authorization", f"Bearer {api_key}")
             request.add_header("Accept", "application/json")
             request.add_header("User-Agent", f"hermes-chutes-provider/{__version__}")
-            for key, value in self.default_headers.items():
+            for key, value in (getattr(self, "default_headers", None) or {}).items():
                 request.add_header(key, value)
 
             with open_credentialed_url(request, timeout=timeout) as response:
@@ -65,7 +72,7 @@ class ChutesProviderProfile(ProviderProfile):
 
     def fetch_models(
         self,
-        api_key: str = "",
+        api_key: str | None = None,
         base_url: str | None = None,
         timeout: float = 8.0,
     ) -> list[str] | None:
@@ -91,6 +98,9 @@ chutes = ChutesProviderProfile(
     auth_type="api_key",
     fallback_models=("default:latency", "default:throughput"),
 )
+# ProviderProfile is a dataclass, so mirror the class-level opt-in onto the
+# instance as well: hosts that inspect vars()/asdict() rather than the class
+# still see it.
 chutes.use_live_model_metadata = True
 
 

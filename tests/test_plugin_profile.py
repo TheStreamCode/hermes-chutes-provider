@@ -17,7 +17,8 @@ PACKAGE_PATH = REPOSITORY_ROOT / "hermes_chutes_provider" / "__init__.py"
 PYPROJECT_PATH = REPOSITORY_ROOT / "pyproject.toml"
 MANIFEST_PATH = REPOSITORY_ROOT / "plugin.yaml"
 CHANGELOG_PATH = REPOSITORY_ROOT / "CHANGELOG.md"
-RELEASE_VERSION = "0.1.3"
+CITATION_PATH = REPOSITORY_ROOT / "CITATION.cff"
+RELEASE_VERSION = "0.1.4"
 
 
 class ProviderProfile:
@@ -91,6 +92,10 @@ class ChutesDirectoryPluginTests(unittest.TestCase):
         self.assertIn(
             f"## [{RELEASE_VERSION}]",
             CHANGELOG_PATH.read_text(encoding="utf-8"),
+        )
+        self.assertIn(
+            f"version: {RELEASE_VERSION}",
+            CITATION_PATH.read_text(encoding="utf-8"),
         )
 
     def test_registers_the_chutes_profile(self) -> None:

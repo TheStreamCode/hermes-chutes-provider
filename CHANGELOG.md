@@ -2,6 +2,31 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.1.4] - 2026-08-01
+
+### Fixed
+
+- Correct `CITATION.cff`, which still advertised version 0.1.0 and a release
+  date that matched no published release.
+- Read `models_url` and `default_headers` defensively in the catalog probe, so
+  a Hermes build that predates either `ProviderProfile` field returns a model
+  list instead of silently swallowing an `AttributeError`.
+- Match the upstream `fetch_models` signature by accepting `api_key=None`.
+
+### Changed
+
+- Describe `use_live_model_metadata` accurately: it is a forward-compatible
+  opt-in that no released Hermes version reads yet.
+- Cover `CITATION.cff` in the release-version consistency test.
+- Ignore `.pytest_cache/` and `.ruff_cache/` explicitly rather than relying on
+  the self-ignoring caches those tools write.
+
+### Added
+
+- `AGENTS.md` with the repository contract for human and AI contributors.
+- Verified CI, release, license, and Python-version badges plus repository
+  layout, versioning, and support sections in the README.
+
 ## [0.1.3] - 2026-07-15
 
 ### Changed

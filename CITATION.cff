@@ -1,10 +1,20 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 title: "Hermes Chutes Provider"
-version: 0.1.0
-date-released: "2026-07-26"
+version: 0.1.4
+date-released: "2026-08-01"
 url: "https://github.com/TheStreamCode/hermes-chutes-provider"
+repository-code: "https://github.com/TheStreamCode/hermes-chutes-provider"
 license: MIT
+abstract: >-
+  Standalone Chutes model-provider plugin for Hermes Agent, distributed
+  outside the Hermes core tree and discovered through the existing user
+  model-provider plugin path.
+keywords:
+  - chutes
+  - hermes-agent
+  - llm
+  - model-provider
 authors:
   - family-names: Gasperini
     given-names: Michael

@@ -122,9 +122,9 @@ Semantic versioning. A version bump must update **all** of these together:
 - `hermes_chutes_provider/__init__.py` `__version__`
 - `CITATION.cff` `version` and `date-released`
 - a new `CHANGELOG.md` section with the real release date
-- `RELEASE_VERSION` in `tests/test_plugin_profile.py`
+- `RELEASE_VERSION` and `RELEASE_DATE` in `tests/test_plugin_profile.py`
 
-`test_release_version_is_consistent` fails if any of the first five drift.
+`test_release_metadata_is_consistent` fails if the version or release date drifts.
 
 ## Release procedure
 

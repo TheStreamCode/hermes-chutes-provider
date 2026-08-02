@@ -19,6 +19,7 @@ MANIFEST_PATH = REPOSITORY_ROOT / "plugin.yaml"
 CHANGELOG_PATH = REPOSITORY_ROOT / "CHANGELOG.md"
 CITATION_PATH = REPOSITORY_ROOT / "CITATION.cff"
 RELEASE_VERSION = "0.1.4"
+RELEASE_DATE = "2026-08-02"
 
 
 class ProviderProfile:
@@ -76,7 +77,10 @@ def load_directory_plugin() -> ProviderProfile:
 
 
 class ChutesDirectoryPluginTests(unittest.TestCase):
-    def test_release_version_is_consistent(self) -> None:
+    def test_release_metadata_is_consistent(self) -> None:
+        changelog = CHANGELOG_PATH.read_text(encoding="utf-8")
+        citation = CITATION_PATH.read_text(encoding="utf-8")
+
         self.assertIn(
             f'__version__ = "{RELEASE_VERSION}"',
             PACKAGE_PATH.read_text(encoding="utf-8"),
@@ -90,12 +94,16 @@ class ChutesDirectoryPluginTests(unittest.TestCase):
             MANIFEST_PATH.read_text(encoding="utf-8"),
         )
         self.assertIn(
-            f"## [{RELEASE_VERSION}]",
-            CHANGELOG_PATH.read_text(encoding="utf-8"),
+            f"## [{RELEASE_VERSION}] - {RELEASE_DATE}",
+            changelog,
         )
         self.assertIn(
             f"version: {RELEASE_VERSION}",
-            CITATION_PATH.read_text(encoding="utf-8"),
+            citation,
+        )
+        self.assertIn(
+            f'date-released: "{RELEASE_DATE}"',
+            citation,
         )
 
     def test_registers_the_chutes_profile(self) -> None:

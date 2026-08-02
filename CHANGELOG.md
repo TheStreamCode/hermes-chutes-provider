@@ -2,7 +2,7 @@
 
 All notable changes to this project are documented in this file.
 
-## [0.1.4] - 2026-08-01
+## [0.1.4] - 2026-08-02
 
 ### Fixed
 
@@ -18,6 +18,8 @@ All notable changes to this project are documented in this file.
 - Describe `use_live_model_metadata` accurately: it is a forward-compatible
   opt-in that no released Hermes version reads yet.
 - Cover `CITATION.cff` in the release-version consistency test.
+- Verify that `CHANGELOG.md` and `CITATION.cff` also carry the same real
+  release date.
 - Ignore `.pytest_cache/` and `.ruff_cache/` explicitly rather than relying on
   the self-ignoring caches those tools write.
 

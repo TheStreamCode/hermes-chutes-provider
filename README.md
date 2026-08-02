@@ -163,7 +163,8 @@ integration contract red.
 
 The project follows semantic versioning. `pyproject.toml`, `plugin.yaml`,
 `CITATION.cff`, `hermes_chutes_provider.__version__`, and `CHANGELOG.md` must
-carry the same version; `test_release_version_is_consistent` enforces it.
+carry the same version, while `CHANGELOG.md` and `CITATION.cff` must also share
+the real release date; `test_release_metadata_is_consistent` enforces both.
 Published versions are listed under
 [Releases](https://github.com/TheStreamCode/hermes-chutes-provider/releases).
 

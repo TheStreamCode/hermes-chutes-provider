@@ -2,7 +2,7 @@
 
 All notable changes to this project are documented in this file.
 
-## [Unreleased]
+## [0.1.5] - 2026-08-08
 
 ### Security
 
@@ -19,11 +19,16 @@ All notable changes to this project are documented in this file.
   revision to currently verified releases.
 - Install the released tag by default and document `main` as a development
   checkout.
+- Present the current support and distribution status before installation
+  details and document the provider's relationship to Hermes' generic
+  transport.
 
 ### Added
 
 - Regression coverage for older Hermes provider profiles, bounded catalog
   reads, optional request metadata, and workflow pinning.
+- Structured bug, compatibility, and feature-request forms with explicit
+  credential-redaction guidance and a private security-reporting route.
 
 ## [0.1.4] - 2026-08-02
 

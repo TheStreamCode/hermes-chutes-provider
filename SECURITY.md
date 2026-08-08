@@ -2,9 +2,12 @@
 
 ## Reporting a Vulnerability
 
-Report sensitive vulnerabilities privately to `info@mikesoft.it` with the
-subject `Hermes Chutes Provider Security Report`. Do not disclose API keys,
-credentials, private prompts, or account data in a public issue.
+Use GitHub's
+[private vulnerability reporting](https://github.com/TheStreamCode/hermes-chutes-provider/security/advisories/new)
+for sensitive findings. If that route is unavailable, email
+`info@mikesoft.it` with the subject `Hermes Chutes Provider Security Report`.
+Do not disclose API keys, credentials, private prompts, or account data in a
+public issue.
 
 For non-sensitive security hardening, open an issue with the affected component,
 observed behavior, impact, and a minimal reproduction where practical.

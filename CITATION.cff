@@ -1,8 +1,8 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 title: "Hermes Chutes Provider"
-version: 0.1.4
-date-released: "2026-08-02"
+version: 0.1.5
+date-released: "2026-08-08"
 url: "https://github.com/TheStreamCode/hermes-chutes-provider"
 repository-code: "https://github.com/TheStreamCode/hermes-chutes-provider"
 license: MIT

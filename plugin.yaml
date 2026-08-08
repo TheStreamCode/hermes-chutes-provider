@@ -1,6 +1,6 @@
 name: chutes-provider
 kind: model-provider
-version: 0.1.4
+version: 0.1.5
 description: Chutes model provider for Hermes Agent
 author: Michael Gasperini (Mikesoft)
 requires_env:

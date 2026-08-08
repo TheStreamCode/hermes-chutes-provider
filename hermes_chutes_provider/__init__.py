@@ -8,7 +8,7 @@ from providers import register_provider
 from providers.base import ProviderProfile
 
 
-__version__ = "0.1.4"
+__version__ = "0.1.5"
 logger = logging.getLogger(__name__)
 _MAX_CATALOG_RESPONSE_BYTES = 8 * 1024 * 1024
 

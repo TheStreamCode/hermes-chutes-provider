@@ -20,7 +20,7 @@ endorsed by, sponsored by, or approved by Chutes Global Corp or Nous Research.
 
 | Area | Current status |
 | --- | --- |
-| Stable release | [`v0.1.4`](https://github.com/TheStreamCode/hermes-chutes-provider/releases/tag/v0.1.4) |
+| Stable release | [`v0.1.5`](https://github.com/TheStreamCode/hermes-chutes-provider/releases/tag/v0.1.5) |
 | Supported installation | Manual directory install from the released tag |
 | Native Hermes install | Pending upstream standalone-plugin support in [Hermes PR #64277](https://github.com/NousResearch/hermes-agent/pull/64277) |
 | Python | 3.11 or newer |
@@ -44,7 +44,7 @@ Clone the latest released snapshot into the active Hermes profile:
 ```bash
 export HERMES_HOME="${HERMES_HOME:-$HOME/.hermes}"
 mkdir -p "$HERMES_HOME/plugins/model-providers"
-git clone --branch v0.1.4 --depth 1 \
+git clone --branch v0.1.5 --depth 1 \
   https://github.com/TheStreamCode/hermes-chutes-provider.git \
   "$HERMES_HOME/plugins/model-providers/chutes"
 ```
@@ -55,7 +55,7 @@ On PowerShell:
 $hermesHome = if ($env:HERMES_HOME) { $env:HERMES_HOME } else { Join-Path $HOME ".hermes" }
 $target = Join-Path $hermesHome "plugins\model-providers\chutes"
 New-Item -ItemType Directory -Force (Split-Path -Parent $target)
-git clone --branch v0.1.4 --depth 1 https://github.com/TheStreamCode/hermes-chutes-provider.git $target
+git clone --branch v0.1.5 --depth 1 https://github.com/TheStreamCode/hermes-chutes-provider.git $target
 ```
 
 #### Development checkout

@@ -1,5 +1,11 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Chutes Documentation
+  - name: Report a security vulnerability
+    url: https://github.com/TheStreamCode/hermes-chutes-provider/security/advisories/new
+    about: Send sensitive findings privately. Never include credentials in a public issue.
+  - name: Chutes documentation
     url: https://docs.chutes.ai
-    about: Official Chutes platform documentation
+    about: Consult official platform documentation; it does not support this unofficial integration.
+  - name: Hermes Agent support
+    url: https://github.com/NousResearch/hermes-agent/issues
+    about: Report issues that also occur without this provider to the Hermes Agent project.

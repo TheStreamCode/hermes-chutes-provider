@@ -8,8 +8,9 @@ from providers import register_provider
 from providers.base import ProviderProfile
 
 
-__version__ = "0.1.4"
+__version__ = "0.1.5"
 logger = logging.getLogger(__name__)
+_MAX_CATALOG_RESPONSE_BYTES = 8 * 1024 * 1024
 
 
 class ChutesProviderProfile(ProviderProfile):
@@ -51,8 +52,18 @@ class ChutesProviderProfile(ProviderProfile):
                 request.add_header(key, value)
 
             with open_credentialed_url(request, timeout=timeout) as response:
-                payload = json.loads(response.read().decode())
-            items = payload if isinstance(payload, list) else payload.get("data", [])
+                body = response.read(_MAX_CATALOG_RESPONSE_BYTES + 1)
+            if len(body) > _MAX_CATALOG_RESPONSE_BYTES:
+                return None
+
+            payload = json.loads(body.decode("utf-8"))
+            if isinstance(payload, list):
+                items = payload
+            elif isinstance(payload, dict) and isinstance(payload.get("data"), list):
+                items = payload["data"]
+            else:
+                return None
+
             models = []
             for item in items:
                 if not isinstance(item, dict):

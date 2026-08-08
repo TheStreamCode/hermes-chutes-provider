@@ -38,7 +38,7 @@ framing intact in every document you touch.
 | Build backend | `setuptools>=77` via `pyproject.toml` |
 | Package manager | `pip` (CI uses `python -m pip`); `uv` is fine locally but do not add a second lockfile or package manager to the repo |
 | Lockfile | none, and none is needed while `dependencies = []` |
-| CI | GitHub Actions, `.github/workflows/ci.yml`, plus CodeQL default setup |
+| CI | GitHub Actions, `.github/workflows/ci.yml` (3.11/3.12/3.13/3.14), plus CodeQL default setup |
 
 There is no lint, format, or type-check step configured. Do not introduce one as
 a drive-by change; the codebase is small and has a consistent internal style
@@ -121,6 +121,7 @@ Semantic versioning. A version bump must update **all** of these together:
 - `plugin.yaml` `version`
 - `hermes_chutes_provider/__init__.py` `__version__`
 - `CITATION.cff` `version` and `date-released`
+- the released tag in the README manual-install commands
 - a new `CHANGELOG.md` section with the real release date
 - `RELEASE_VERSION` and `RELEASE_DATE` in `tests/test_plugin_profile.py`
 
@@ -129,7 +130,8 @@ Semantic versioning. A version bump must update **all** of these together:
 ## Release procedure
 
 `main` is protected: linear history, no force pushes, required status checks
-`offline-tests (3.11)` and `offline-tests (3.13)`, and **one approving review**.
+`offline-tests (3.11)`, `offline-tests (3.14)`, `hermes-integration`, and
+`CodeQL`, enforced for administrators, plus **one approving review**.
 Therefore:
 
 1. Work on a branch, never directly on `main`.

@@ -16,6 +16,20 @@ not need an upstream Hermes source change.
 This is an independent, unofficial integration. It is not affiliated with,
 endorsed by, sponsored by, or approved by Chutes Global Corp or Nous Research.
 
+## Project status
+
+| Area | Current status |
+| --- | --- |
+| Stable release | [`v0.1.4`](https://github.com/TheStreamCode/hermes-chutes-provider/releases/tag/v0.1.4) |
+| Supported installation | Manual directory install from the released tag |
+| Native Hermes install | Pending upstream standalone-plugin support in [Hermes PR #64277](https://github.com/NousResearch/hermes-agent/pull/64277) |
+| Python | 3.11 or newer |
+| Distribution | GitHub Releases only; not published to PyPI |
+
+The profile keeps the stable `chutes` provider identity, discovers current
+tool-capable models from the live Chutes catalog, and falls back to Chutes'
+routing aliases when that catalog cannot be reached.
+
 ## Requirements
 
 - A Hermes Agent installation with model-provider plugin discovery.
@@ -125,6 +139,13 @@ change between requests.
 This plugin declares metadata for Hermes' existing generic OpenAI-compatible
 transport and provider-discovery systems. It does not modify Hermes Agent, add
 a custom transport, or include Chutes API keys.
+
+```mermaid
+flowchart LR
+    P["Chutes provider profile"] -->|configures| R["Hermes provider registry"]
+    R --> T["Generic OpenAI-compatible transport"]
+    T --> C["Chutes API"]
+```
 
 For Chutes skills, setup recipes, model guidance, and platform documentation,
 see [Veightor/chutes-agent-toolkit](https://github.com/Veightor/chutes-agent-toolkit).

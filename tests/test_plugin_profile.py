@@ -23,6 +23,7 @@ PYPROJECT_PATH = REPOSITORY_ROOT / "pyproject.toml"
 MANIFEST_PATH = REPOSITORY_ROOT / "plugin.yaml"
 CHANGELOG_PATH = REPOSITORY_ROOT / "CHANGELOG.md"
 CITATION_PATH = REPOSITORY_ROOT / "CITATION.cff"
+ISSUE_TEMPLATE_DIRECTORY = REPOSITORY_ROOT / ".github" / "ISSUE_TEMPLATE"
 RELEASE_VERSION = "0.1.4"
 RELEASE_DATE = "2026-08-02"
 
@@ -305,6 +306,33 @@ class ChutesDirectoryPluginTests(unittest.TestCase):
         self.assertIn("https://github.com/Veightor/chutes-agent-toolkit", readme)
         self.assertNotIn("https://github.com/chutesai/chutes-agent-toolkit", readme)
         self.assertIn("Development checkout", readme)
+        self.assertIn("## Project status", readme)
+        self.assertIn("GitHub Releases only; not published to PyPI", readme)
+        self.assertIn("Generic OpenAI-compatible transport", readme)
+
+    def test_issue_forms_route_security_reports_and_guard_credentials(self) -> None:
+        config = (ISSUE_TEMPLATE_DIRECTORY / "config.yml").read_text(
+            encoding="utf-8"
+        )
+        bug_form = (ISSUE_TEMPLATE_DIRECTORY / "bug.yml").read_text(
+            encoding="utf-8"
+        )
+        compatibility_form = (
+            ISSUE_TEMPLATE_DIRECTORY / "compatibility.yml"
+        ).read_text(encoding="utf-8")
+        feature_form = (ISSUE_TEMPLATE_DIRECTORY / "feature_request.yml").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("blank_issues_enabled: false", config)
+        self.assertIn("security/advisories/new", config)
+        self.assertIn('labels: ["bug"]', bug_form)
+        self.assertIn('labels: ["compatibility"]', compatibility_form)
+        self.assertIn('labels: ["enhancement"]', feature_form)
+        for form in (bug_form, compatibility_form):
+            with self.subTest(form=form[:40]):
+                self.assertIn("Remove API keys", form)
+                self.assertIn("required: true", form)
 
     def test_ci_runs_the_offline_contract_suite(self) -> None:
         if not CI_WORKFLOW_PATH.is_file():

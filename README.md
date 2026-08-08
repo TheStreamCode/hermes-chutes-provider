@@ -25,12 +25,13 @@ endorsed by, sponsored by, or approved by Chutes Global Corp or Nous Research.
 
 ### Manual directory install
 
-Clone this repository into the active Hermes profile:
+Clone the latest released snapshot into the active Hermes profile:
 
 ```bash
 export HERMES_HOME="${HERMES_HOME:-$HOME/.hermes}"
 mkdir -p "$HERMES_HOME/plugins/model-providers"
-git clone https://github.com/TheStreamCode/hermes-chutes-provider.git \
+git clone --branch v0.1.4 --depth 1 \
+  https://github.com/TheStreamCode/hermes-chutes-provider.git \
   "$HERMES_HOME/plugins/model-providers/chutes"
 ```
 
@@ -40,8 +41,14 @@ On PowerShell:
 $hermesHome = if ($env:HERMES_HOME) { $env:HERMES_HOME } else { Join-Path $HOME ".hermes" }
 $target = Join-Path $hermesHome "plugins\model-providers\chutes"
 New-Item -ItemType Directory -Force (Split-Path -Parent $target)
-git clone https://github.com/TheStreamCode/hermes-chutes-provider.git $target
+git clone --branch v0.1.4 --depth 1 https://github.com/TheStreamCode/hermes-chutes-provider.git $target
 ```
+
+#### Development checkout
+
+To test unreleased changes, clone `main` instead by omitting `--branch` and
+`--depth`. Treat that checkout as development code rather than a published
+release.
 
 Add the key to `$HERMES_HOME/.env`:
 
@@ -162,9 +169,10 @@ integration contract red.
 ## Versioning and releases
 
 The project follows semantic versioning. `pyproject.toml`, `plugin.yaml`,
-`CITATION.cff`, `hermes_chutes_provider.__version__`, and `CHANGELOG.md` must
-carry the same version, while `CHANGELOG.md` and `CITATION.cff` must also share
-the real release date; `test_release_metadata_is_consistent` enforces both.
+`CITATION.cff`, `hermes_chutes_provider.__version__`, `CHANGELOG.md`, and the
+manual-install tag above must carry the same version, while `CHANGELOG.md` and
+`CITATION.cff` must also share the real release date;
+`test_release_metadata_is_consistent` enforces both.
 Published versions are listed under
 [Releases](https://github.com/TheStreamCode/hermes-chutes-provider/releases).
 

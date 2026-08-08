@@ -27,6 +27,8 @@ What actually happens.
 - Plugin version:
 
 ## Logs / Traceback
+Remove API keys, credentials, private prompts, and account data before pasting.
+
 ```
 Paste relevant output here.
 ```

@@ -2,6 +2,29 @@
 
 All notable changes to this project are documented in this file.
 
+## [Unreleased]
+
+### Security
+
+- Bound live catalog responses to 8 MiB before decoding, so a misbehaving
+  endpoint cannot make the provider buffer an unbounded response.
+- Stop persisting GitHub credentials in CI checkouts and enforce commit-pinned
+  Actions through the offline contract.
+
+### Changed
+
+- Reject malformed catalog payload shapes while preserving an empty valid
+  catalog and the routing-alias fallback behavior.
+- Test Python 3.14 and refresh the pinned GitHub Actions and Hermes integration
+  revision to currently verified releases.
+- Install the released tag by default and document `main` as a development
+  checkout.
+
+### Added
+
+- Regression coverage for older Hermes provider profiles, bounded catalog
+  reads, optional request metadata, and workflow pinning.
+
 ## [0.1.4] - 2026-08-02
 
 ### Fixed

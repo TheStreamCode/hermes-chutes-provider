@@ -19,11 +19,20 @@ Run the offline test suite before opening a pull request:
 python -m unittest discover -s tests -v
 ```
 
-Changes to packaging should also build a wheel successfully:
+When a Hermes checkout is available, run the integration contract as well:
+
+```bash
+HERMES_SOURCE=/path/to/hermes-agent python -m unittest discover -s tests -v
+```
+
+Changes to packaging should build both release distributions and the CI wheel:
 
 ```bash
 python -m pip wheel . --no-deps
+python -m build
 ```
+
+No validation command may perform paid inference or use a real API key.
 
 ## Pull Requests
 

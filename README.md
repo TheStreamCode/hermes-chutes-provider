@@ -187,6 +187,28 @@ No test may call paid inference or use a real API key. CI pins the Hermes
 revision it tests against, so a Hermes-side change never silently turns the
 integration contract red.
 
+## Troubleshooting
+
+### Model picker shows only routing aliases
+
+The live catalog at `https://llm.chutes.ai/v1/models` could not be reached,
+so only the `default:latency` routing aliases are offered. Check network
+access to `llm.chutes.ai`, verify `CHUTES_BASE_URL` if overridden, then
+reload the picker. Concrete model IDs return once the catalog loads.
+
+### 401 Unauthorized on inference or catalog requests
+
+The `CHUTES_API_KEY` is missing, expired, or revoked. Generate a new key,
+update the active Hermes profile's environment configuration, and retry.
+The provider never logs or persists the key, so there is nothing to scrub
+from local state — just replace it.
+
+### Gateway keeps serving the old provider profile
+
+After upgrading or rotating credentials, restart the Hermes gateway so it
+re-discovers the installed provider profile instead of serving the cached
+one. Then re-run the picker to confirm the new version and models appear.
+
 ## Versioning and releases
 
 The project follows semantic versioning. `pyproject.toml`, `plugin.yaml`,

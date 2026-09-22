@@ -8,3 +8,6 @@ language, and knowingly misleading security, privacy, or compatibility claims.
 
 Maintainers may moderate issues, pull requests, and discussions to preserve a
 safe and useful project environment.
+
+To report a conduct concern privately, email `info@mikesoft.it` with the
+subject `Hermes Chutes Provider Code of Conduct Report`.

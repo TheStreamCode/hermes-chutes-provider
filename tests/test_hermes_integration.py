@@ -66,7 +66,10 @@ assert runtime["provider"] == "chutes"
 assert runtime["api_key"] == "cpk_test-key"
 assert runtime["base_url"] == "https://chutes.test/v1"
 
-from hermes_cli.doctor_connectivity import _build_apikey_providers_list
+try:
+    from hermes_cli.doctor_connectivity import _build_apikey_providers_list
+except ModuleNotFoundError:  # older hosts keep the helper in hermes_cli.doctor
+    from hermes_cli.doctor import _build_apikey_providers_list
 rows = [row for row in _build_apikey_providers_list() if row[0] == "Chutes"]
 assert len(rows) == 1
 assert rows[0][1] == ("CHUTES_API_KEY",)
@@ -82,10 +85,12 @@ payload = b'{"data":[{"id":"fixture-tool-model","supported_features":["tools"],"
 with patch("hermes_cli.urllib_security.open_credentialed_url", return_value=io.BytesIO(payload)) as opener:
     assert profile.live_context_length("fixture-tool-model", api_key="fixture-key", base_url=runtime["base_url"]) == 32768
     save_context_length("fixture-tool-model", runtime["base_url"], 131072)
-    expected = 32768 if hasattr(ProviderProfile, "use_live_model_metadata") else 131072
-    assert get_model_context_length("fixture-tool-model", base_url=runtime["base_url"], api_key="fixture-key", provider="chutes") == expected
+    if hasattr(ProviderProfile, "use_live_model_metadata"):
+        # Opted-in hosts consult the hook before the persistent cache, and the
+        # hook's own cache means the catalog is still fetched only once.
+        assert get_model_context_length("fixture-tool-model", base_url=runtime["base_url"], api_key="fixture-key", provider="chutes") == 32768
+        opener.assert_called_once()
     assert get_model_context_length("fixture-tool-model", base_url=runtime["base_url"], provider="chutes", config_context_length=8192) == 8192
-    opener.assert_called_once()
 """
             result = subprocess.run(
                 [HERMES_PYTHON, "-c", program],

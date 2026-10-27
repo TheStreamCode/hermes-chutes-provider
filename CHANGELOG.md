@@ -2,6 +2,19 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.1.6] - 2026-10-27
+
+### Added
+
+- Implement Hermes' `live_context_length()` hook: exact model windows from the
+  live catalog, behind a 5-minute in-memory cache keyed by catalog endpoint and
+  credential. Failed probes are cached too, an outage reuses only the same
+  catalog scope's last known window, and a successful empty catalog never
+  resurrects removed models. Hosts that support the
+  `use_live_model_metadata` opt-in (Hermes PR #101567) consult the hook before
+  the persistent context cache; older hosts keep the documented
+  `model.context_length` override.
+
 ## [0.1.5] - 2026-08-09
 
 ### Security

@@ -1,16 +1,21 @@
 """Chutes model-provider profile for Hermes Agent."""
 
+import hashlib
 import json
 import logging
+import threading
+import time
 import urllib.request
 
 from providers import register_provider
 from providers.base import ProviderProfile
 
 
-__version__ = "0.1.5"
+__version__ = "0.1.6"
 logger = logging.getLogger(__name__)
 _MAX_CATALOG_RESPONSE_BYTES = 8 * 1024 * 1024
+_LIVE_CONTEXT_TTL = 300.0
+_LIVE_CONTEXT_LOCK = threading.Lock()
 
 
 class ChutesProviderProfile(ProviderProfile):
@@ -22,6 +27,40 @@ class ChutesProviderProfile(ProviderProfile):
     # ignore unknown class attributes, so declaring it is inert until support
     # lands upstream.
     use_live_model_metadata = True
+
+    def live_context_length(
+        self, model: str, *, api_key: str = "", base_url: str = ""
+    ) -> int | None:
+        """Return an exact catalog window without persisting fallback guesses."""
+
+        catalog_identity = json.dumps(
+            [
+                (base_url or self.base_url).rstrip("/"),
+                getattr(self, "models_url", "") or "",
+                getattr(self, "default_headers", None) or {},
+                api_key,
+            ],
+            sort_keys=True,
+        )
+        cache_key = hashlib.sha256(catalog_identity.encode("utf-8")).hexdigest()
+        # Serialize refreshes so overlapping context lookups share one bounded
+        # probe. Include the caller's endpoint even when models_url is set:
+        # an overridden fetch hook may route those endpoints independently.
+        with _LIVE_CONTEXT_LOCK:
+            cache = self.__dict__.setdefault("_live_context_cache", {})
+            cached = cache.get(cache_key)
+            if cached is not None and time.monotonic() - cached[0] < _LIVE_CONTEXT_TTL:
+                entries = cached[1]
+            else:
+                entries = self.fetch_model_metadata(api_key=api_key, base_url=base_url or None)
+                if entries is None:
+                    entries = cached[1] if cached else []
+                cache[cache_key] = (time.monotonic(), entries)
+        for entry in entries:
+            if entry.get("id") == model:
+                window = entry.get("context_length")
+                return window if type(window) is int and window > 0 else None
+        return None
 
     def fetch_model_metadata(
         self,

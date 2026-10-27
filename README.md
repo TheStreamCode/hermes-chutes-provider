@@ -31,7 +31,7 @@ Clone the latest released snapshot into the active Hermes profile:
 ```bash
 export HERMES_HOME="${HERMES_HOME:-$HOME/.hermes}"
 mkdir -p "$HERMES_HOME/plugins/model-providers"
-git clone --branch v0.1.5 --depth 1 \
+git clone --branch v0.1.6 --depth 1 \
   https://github.com/TheStreamCode/hermes-chutes-provider.git \
   "$HERMES_HOME/plugins/model-providers/chutes"
 ```
@@ -42,7 +42,7 @@ On PowerShell:
 $hermesHome = if ($env:HERMES_HOME) { $env:HERMES_HOME } else { Join-Path $HOME ".hermes" }
 $target = Join-Path $hermesHome "plugins\model-providers\chutes"
 New-Item -ItemType Directory -Force (Split-Path -Parent $target)
-git clone --branch v0.1.5 --depth 1 https://github.com/TheStreamCode/hermes-chutes-provider.git $target
+git clone --branch v0.1.6 --depth 1 https://github.com/TheStreamCode/hermes-chutes-provider.git $target
 ```
 
 #### Development checkout
@@ -113,6 +113,14 @@ Hermes builds without provider live-metadata support discover model IDs but may 
 context limits. When selecting a concrete model, copy its live `context_length` value to
 `model.context_length` in the Hermes configuration. Routing aliases do not have one fixed context
 window because their target can change between requests.
+
+The plugin also implements Hermes' `live_context_length()` hook. Hosts supporting
+the `use_live_model_metadata` opt-in can consult it before the persistent context
+cache; older hosts retain the manual override above. Catalog probes are cached
+in memory for five minutes, separately for each endpoint and credential, including
+failed probes. An unavailable catalog can reuse its own last known window, never
+one learned from a different endpoint or credential. An explicit
+`model.context_length` still takes precedence.
 
 ## Requirements
 

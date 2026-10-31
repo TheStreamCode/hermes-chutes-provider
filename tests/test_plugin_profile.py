@@ -343,7 +343,7 @@ class ChutesDirectoryPluginTests(unittest.TestCase):
         self.assertIn("NousResearch/hermes-agent", workflow)
         self.assertIn("3c27eb6234bf91b8ceee9e9071591b31e9b148cb", workflow)
         self.assertIn("3d3c42e5aac5ba805825da76410c181273ba90b1", workflow)
-        self.assertIn("5fda3b95a4ea91299a34e894583c3862153e4b97", workflow)
+        self.assertIn("6d4fd22b20465ccc0f7354476588e8df7c9ca0e0", workflow)
         self.assertIn("HERMES_SOURCE", workflow)
         self.assertIn("python -m pip wheel . --no-deps", workflow)
         self.assertIn('python-version: ["3.11", "3.12", "3.13", "3.14"]', workflow)

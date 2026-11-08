@@ -12,16 +12,6 @@ the existing user model-provider discovery path, so Chutes-specific maintenance 
 Hermes core tree. It is an independent, unofficial integration, not affiliated with, endorsed by,
 sponsored by, or approved by Chutes Global Corp or Nous Research.
 
-## Project status
-
-| Area | Current status |
-| --- | --- |
-| Stable release | [`v0.1.5`](https://github.com/TheStreamCode/hermes-chutes-provider/releases/tag/v0.1.5) |
-| Supported installation | Manual directory install from the released tag |
-| Native Hermes install | Pending upstream standalone-plugin support in [Hermes PR #64277](https://github.com/NousResearch/hermes-agent/pull/64277) |
-| Python | 3.11 or newer |
-| Distribution | GitHub Releases only; not published to PyPI |
-
 ## Install
 
 ### Manual directory install
@@ -98,7 +88,7 @@ directory install above.
 - Installs as a user-directory plugin without patching Hermes Agent.
 - Declares no runtime dependencies; Python 3.11 or newer.
 
-## Models
+### Models
 
 `default:latency` is Chutes' routing alias for interactive use. Use `default:throughput` for
 long-running or background work, or select a concrete model returned by the live
@@ -128,6 +118,16 @@ one learned from a different endpoint or credential. An explicit
 - A Chutes API key from [chutes.ai/app/api](https://chutes.ai/app/api).
 - Python 3.11 or newer; CI covers 3.11, 3.12, 3.13, and 3.14.
 - Network access to `https://llm.chutes.ai/v1` for inference and catalog discovery.
+
+### Project status
+
+| Area | Current status |
+| --- | --- |
+| Stable release | [`v0.1.6`](https://github.com/TheStreamCode/hermes-chutes-provider/releases/tag/v0.1.6) |
+| Supported installation | Manual directory install from the released tag |
+| Native Hermes install | Pending upstream standalone-plugin support in [Hermes PR #64277](https://github.com/NousResearch/hermes-agent/pull/64277) |
+| Python | 3.11 or newer |
+| Distribution | GitHub Releases only; not published to PyPI |
 
 ## Configuration
 
@@ -218,5 +218,4 @@ names, services, and trademarks remain the property of their respective owners; 
 ---
 
 Maintained by [Michael Gasperini (Mikesoft)](https://mikesoft.it).
-If this project is useful to you, consider
-[sponsoring its maintenance](https://github.com/sponsors/TheStreamCode).
+If this project is useful to you, consider [sponsoring its maintenance](https://github.com/sponsors/TheStreamCode).

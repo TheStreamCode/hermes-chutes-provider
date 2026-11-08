@@ -21,7 +21,7 @@ Clone the latest released snapshot into the active Hermes profile:
 ```bash
 export HERMES_HOME="${HERMES_HOME:-$HOME/.hermes}"
 mkdir -p "$HERMES_HOME/plugins/model-providers"
-git clone --branch v0.1.6 --depth 1 \
+git clone --branch v0.1.7 --depth 1 \
   https://github.com/TheStreamCode/hermes-chutes-provider.git \
   "$HERMES_HOME/plugins/model-providers/chutes"
 ```
@@ -32,7 +32,7 @@ On PowerShell:
 $hermesHome = if ($env:HERMES_HOME) { $env:HERMES_HOME } else { Join-Path $HOME ".hermes" }
 $target = Join-Path $hermesHome "plugins\model-providers\chutes"
 New-Item -ItemType Directory -Force (Split-Path -Parent $target)
-git clone --branch v0.1.6 --depth 1 https://github.com/TheStreamCode/hermes-chutes-provider.git $target
+git clone --branch v0.1.7 --depth 1 https://github.com/TheStreamCode/hermes-chutes-provider.git $target
 ```
 
 #### Development checkout
@@ -95,8 +95,11 @@ long-running or background work, or select a concrete model returned by the live
 [`https://llm.chutes.ai/v1/models`](https://llm.chutes.ai/v1/models) catalog.
 
 The live catalog is the source of truth for availability, capabilities, and pricing. The picker
-keeps the two routing aliases and includes only live models that advertise tool calling. If the
-catalog is unavailable, the routing aliases remain selectable; restore network access before
+keeps the two routing aliases, includes live models that advertise tool calling, and also keeps
+models whose capability metadata is absent. Chutes omits `supported_features` for non-TEE models
+even though they accept tool calls, so treating the field as mandatory hid those models. A model
+is excluded only when its `supported_features` list is present and does not contain `tools`. If
+the catalog is unavailable, the routing aliases remain selectable; restore network access before
 choosing a concrete model instead of relying on a stale local list.
 
 Hermes builds without provider live-metadata support discover model IDs but may not import their

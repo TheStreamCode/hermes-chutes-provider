@@ -24,8 +24,8 @@ MANIFEST_PATH = REPOSITORY_ROOT / "plugin.yaml"
 CHANGELOG_PATH = REPOSITORY_ROOT / "CHANGELOG.md"
 CITATION_PATH = REPOSITORY_ROOT / "CITATION.cff"
 ISSUE_TEMPLATE_DIRECTORY = REPOSITORY_ROOT / ".github" / "ISSUE_TEMPLATE"
-RELEASE_VERSION = "0.1.6"
-RELEASE_DATE = "2026-10-27"
+RELEASE_VERSION = "0.1.7"
+RELEASE_DATE = "2026-11-08"
 
 
 class ProviderProfile:
@@ -178,7 +178,7 @@ class ChutesDirectoryPluginTests(unittest.TestCase):
 
         self.assertIsNone(profile.fetch_models(base_url="://invalid"))
 
-    def test_live_catalog_only_returns_tool_capable_models(self) -> None:
+    def test_live_catalog_keeps_tool_capable_and_unknown_models(self) -> None:
         profile = load_directory_plugin()
         payload = b'''{
             "data": [
@@ -206,15 +206,36 @@ class ChutesDirectoryPluginTests(unittest.TestCase):
                 {
                     "id": "tool-model",
                     "supported_features": ["tools", "reasoning"],
-                }
+                },
+                {"id": "unknown-model"},
+                {"id": "null-features", "supported_features": None},
             ],
         )
-        self.assertEqual(models, ["tool-model"])
+        self.assertEqual(
+            models, ["tool-model", "unknown-model", "null-features"]
+        )
         self.assertEqual(len(requests), 2)
         request, timeout = requests[0]
         self.assertEqual(request.full_url, "https://chutes.test/v1/models")
         self.assertEqual(request.get_header("Authorization"), "Bearer cpk_test-key")
         self.assertEqual(timeout, 8.0)
+
+    def test_live_catalog_keeps_non_tee_models_without_features(self) -> None:
+        profile = load_directory_plugin()
+        payload = b'''{
+            "data": [
+                {"id": "zai-org/GLM-5.3", "owned_by": "chutes"},
+                {"id": "zai-org/GLM-5.2-TEE", "owned_by": "sglang",
+                 "supported_features": ["tools"]},
+                {"id": "chat-only-model", "supported_features": ["reasoning"]}
+            ]
+        }'''
+
+        with stub_catalog_response(payload):
+            self.assertEqual(
+                profile.fetch_models(base_url="https://chutes.test/v1"),
+                ["zai-org/GLM-5.3", "zai-org/GLM-5.2-TEE"],
+            )
 
     def test_catalog_rejects_malformed_or_oversized_payloads(self) -> None:
         profile = load_directory_plugin()

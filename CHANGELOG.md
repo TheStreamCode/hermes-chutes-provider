@@ -2,6 +2,22 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.1.7] - 2026-11-08
+
+### Fixed
+
+- Keep live catalog models whose `supported_features` metadata is absent.
+  Chutes omits the field for non-TEE models (for example `zai-org/GLM-5.3`,
+  `moonshotai/Kimi-K2.7-Code`, and `deepseek-ai/DeepSeek-V4.1-Flash-1017`),
+  so the picker showed only the TEE subset even though those models accept
+  tool calls. Unknown capability is no longer treated as missing tool support;
+  a model is dropped only when its `supported_features` list explicitly lacks
+  `tools`.
+
+### Added
+
+- Regression coverage for the non-TEE catalog shape.
+
 ## [0.1.6] - 2026-10-27
 
 ### Added

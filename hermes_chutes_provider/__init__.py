@@ -11,7 +11,7 @@ from providers import register_provider
 from providers.base import ProviderProfile
 
 
-__version__ = "0.1.6"
+__version__ = "0.1.7"
 logger = logging.getLogger(__name__)
 _MAX_CATALOG_RESPONSE_BYTES = 8 * 1024 * 1024
 _LIVE_CONTEXT_TTL = 300.0
@@ -111,10 +111,13 @@ class ChutesProviderProfile(ProviderProfile):
                 if not isinstance(model_id, str) or not model_id.strip():
                     continue
                 features = item.get("supported_features")
-                if not isinstance(features, (list, tuple, set)):
-                    continue
-                if "tools" in {str(feature).lower() for feature in features}:
-                    models.append(item)
+                # Chutes omits supported_features for non-TEE models even though
+                # they accept tool calls. Treat unknown metadata as eligible and
+                # drop a model only when it explicitly advertises no tool support.
+                if isinstance(features, (list, tuple, set)):
+                    if "tools" not in {str(feature).lower() for feature in features}:
+                        continue
+                models.append(item)
             return models
         except Exception as exc:
             logger.debug("fetch_model_metadata(chutes): %s", exc)
